@@ -94,3 +94,9 @@ footer {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
 }
+
+.link{
+  background-color: #eceded;
+  text-align: center;
+  font-size: larger;
+}

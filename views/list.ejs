@@ -17,7 +17,13 @@
             <button type="submit" name="list" value=<%= listTitle %> >+</button>
         </form>
 </div>
-
+<div class="box link">
+    <% if( listTitle != "Work List") { %>
+    <a href="/work">work list</a>
+    <% }  else { %>
+        <a href="/">Todolist</a>
+        <% }%>
+</div>
     
 <%- include("footer") -%>
 
