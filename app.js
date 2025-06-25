@@ -9,7 +9,11 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB");
+const userName = process.env.USER_MONGO;
+const mongoKey = process.env.USER_KEY;
+const dbName = process.env.DB_NAME;
+
+mongoose.connect("mongodb+srv://"+userName+":"+ mongoKey+"@cluster0.oeamqqb.mongodb.net/"+dbName+"?retryWrites=true&w=majority&appName=Cluster0");
 
 const itemSchema = new mongoose.Schema({
   name: String,
@@ -113,6 +117,11 @@ app.get("/:paramName", function (req, res) {
 
 app.get("/about", function (req, res) {
   res.render("about");
+});
+
+app.post("/newList",function(req,res){
+ const new_list =req.body.newItem;
+ res.redirect("/"+new_list);
 });
 
 app.listen(3000, function (req, res) {

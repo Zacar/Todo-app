@@ -19,6 +19,13 @@
             <input type="text" name="newItem"  id="" placeholder="New Item" autocomplete="off">
             <button type="submit" name="list" value=<%= listTitle %> >+</button>
         </form>
+        <hr>
+        <div id="create_list">
+        <form class="item" action="/newList" method="post">
+            <input type="text" name="newItem"  id="" placeholder="Create or view another list" autocomplete="off">
+            <button type="submit" name="list" value=<%= listTitle %> >+</button>
+        </form>
+        </div>
 </div>
 
     
