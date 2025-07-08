@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -14,7 +14,9 @@ const userName = process.env.USER_MONGO;
 const mongoKey = process.env.USER_KEY;
 const dbName = process.env.DB_NAME;
 
-mongoose.connect(`mongodb+srv://${userName}:${mongoKey}@cluster0.oeamqqb.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`);
+mongoose.connect(
+  `mongodb+srv://${userName}:${mongoKey}@cluster0.oeamqqb.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`
+);
 
 const itemSchema = new mongoose.Schema({
   name: String,
@@ -70,7 +72,7 @@ app.post("/", function (req, res) {
   } else {
     List.findOne({ name: listName }).then((foundList) => {
       foundList.items.push(item4);
-      foundList.save().then(()=>{
+      foundList.save().then(() => {
         res.redirect("/" + listName);
       });
     });
@@ -89,24 +91,26 @@ app.post("/delete", function (req, res) {
   } else {
     List.findOneAndUpdate(
       { name: listName },
-      { $pull: { items: { _id:checkedItemId} } }
-    ).then(() => {
-      res.redirect("/" + listName);
-    }).catch((err)=>{
-      console.log(err);
-    });
+      { $pull: { items: { _id: checkedItemId } } }
+    )
+      .then(() => {
+        res.redirect("/" + listName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 
 app.get("/:paramName", function (req, res) {
-  const new_param =_.capitalize(req.params.paramName);
+  const new_param = _.capitalize(req.params.paramName);
   List.findOne({ name: new_param }).then((results) => {
     if (!results) {
       const list = new List({
         name: new_param,
         items: defaultItems,
       });
-      list.save().then(()=>{
+      list.save().then(() => {
         res.redirect("/" + new_param);
       });
     } else {
@@ -122,13 +126,13 @@ app.get("/about", function (req, res) {
   res.render("about");
 });
 
-app.post("/newList",function(req,res){
- const new_list=req.body.newItem;
- res.redirect("/"+new_list);
+app.post("/newList", function (req, res) {
+  const new_list = req.body.newItem;
+  res.redirect("/" + new_list);
 });
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function () {
-  console.log("Server is running on port " + port);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server running on port ${port}`);
 });
